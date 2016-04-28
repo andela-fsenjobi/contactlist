@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def show
-        render json: User.find(params[:id])
+        render json: current_user
       end
 
       def create
