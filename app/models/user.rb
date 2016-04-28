@@ -4,11 +4,11 @@ class User < ActiveRecord::Base
 
   def login
     self.is_logged_in = true
-    self.save
+    save
   end
 
   def logout
     self.is_logged_in = false
-    self.save
+    save
   end
 end

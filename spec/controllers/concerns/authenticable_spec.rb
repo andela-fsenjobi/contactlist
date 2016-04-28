@@ -7,27 +7,27 @@ end
 
 describe Authenticable do
   let(:authentication) { Authenticaction.new }
+  let(:user) { create(:user) }
   subject { authentication }
 
   describe '#current_user' do
     before(:each) do
-      @user = create(:user)
+      user.login
       payload = {
-        email: @user.email,
-        id: @user.id
+        email: user.email,
+        id: user.id
       }
       request.headers["Authorization"] = JsonWebToken.encode payload
       allow(authentication).to receive(:request).and_return(request)
     end
 
     it "return the user from the authentication headers" do
-      expect(authentication.current_user.email).to eql(@user.email)
+      expect(authentication.current_user.email).to eql(user.email)
     end
   end
 
   describe '#authenticate_with_token' do
     before(:each) do
-      @user = create(:user)
       allow(authentication).to receive(:current_user).and_return(nil)
       allow(response).to receive(:response_code).and_return(401)
       allow(response).to receive(:body).
@@ -45,16 +45,17 @@ describe Authenticable do
   describe '#user_signed_in?' do
     context "when there is a user on session" do
       before do
-        @user = create(:user)
-        expect(authentication).to receive(:current_user).and_return(@user)
+        expect(authentication).to receive(:current_user).and_return(user)
       end
 
-      it { should be_user_signed_in }
+      it do
+        user.login
+        should be_user_signed_in
+      end
     end
 
     context "when there is no user on session" do
       before do
-        @user = create(:user)
         allow(authentication).to receive(:current_user).and_return(nil)
       end
 

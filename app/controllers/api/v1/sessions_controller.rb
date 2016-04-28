@@ -20,13 +20,13 @@ module Api
           }
           render json: data, status: 200, location: [:api, user]
         else
-          render json: { error: 'Invalid login credentials' }, status: 422
+          render json: { error: "Invalid login credentials" }, status: 422
         end
       end
 
       def destroy
         current_user.logout
-        render json: { message: 'You are logged out' }, status: 401
+        render json: { message: "You are logged out" }, status: 401
       end
     end
   end
