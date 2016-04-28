@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :tranaction do
+  factory :transaction do
     status "Paid"
     customer
     amount 200
