@@ -13,6 +13,7 @@ module Request
     end
 
     def api_authorization_header(user)
+      user.login
       payload = {
         email: user.email,
         id: user.id

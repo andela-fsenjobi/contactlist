@@ -18,7 +18,7 @@ module Authenticable
 
   def get_user_from_token(token)
     user = JsonWebToken.decode token
-    User.find_by(email: user["email"], id: user["id"])
+    User.find_by(email: user["email"], id: user["id"], is_logged_in: true)
   rescue
     nil
   end
