@@ -1,10 +1,10 @@
 require "rails_helper"
 
 describe Api::V1::TransactionsController do
+  let(:user) { create(:user) }
+  let(:customer) { create(:customer) }
+  
   describe 'GET #show' do
-    let(:user) { create(:user) }
-    let(:customer) { create(:customer) }
-
     context "when user is logged in" do
       before(:each) do
         @transaction = create(:transaction, user: user, customer: customer)
@@ -14,7 +14,7 @@ describe Api::V1::TransactionsController do
 
       it "expect to see transaction details" do
         transaction_response = json_response[:transaction]
-        expect(transaction_response[:name]).to eql @transaction.name
+        expect(transaction_response[:status]).to eql @transaction.status
       end
 
       it { should respond_with 200 }

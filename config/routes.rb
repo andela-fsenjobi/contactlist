@@ -10,6 +10,8 @@ Contactlist::Application.routes.draw do
       post "auth/login", to: "sessions#create"
       get "auth/logout", to: "sessions#destroy"
       resources :customers, only: [:index, :create, :update, :destroy, :show]
+      resources :transactions, only: [:index, :create, :update, :destroy, :show]
+
     end
   end
 end

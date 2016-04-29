@@ -4,6 +4,7 @@ FactoryGirl.define do
     customer
     amount 200
     user
+    expiry Time.now + 30*24*60*60
 
     trait :unpaid do
       status "Unpaid"
