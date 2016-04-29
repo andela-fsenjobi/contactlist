@@ -3,4 +3,6 @@ class Transaction < ActiveRecord::Base
   belongs_to :customer
   validates :user, presence: true
   validates :customer, presence: true
+  validates :expiry, presence: true
+
 end

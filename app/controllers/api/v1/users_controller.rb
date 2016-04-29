@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :authenticate_with_token, only: [:update, :destroy]
+      skip_before_action :authenticate_with_token, only: [:create]
       respond_to :json
 
       def show

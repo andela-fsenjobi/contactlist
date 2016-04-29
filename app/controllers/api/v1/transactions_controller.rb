@@ -2,13 +2,7 @@ module Api
   module V1
     class TransactionsController < ApplicationController
       before_action :set_transaction, only: [:show, :update, :destroy]
-      before_action :authenticate_with_token, only: [
-        :create,
-        :index,
-        :show,
-        :update,
-        :destroy
-      ]
+      before_action :authenticate_with_token
       respond_to :json
 
       def show
@@ -22,6 +16,7 @@ module Api
 
       def create
         transaction = current_user.transactions.build(transaction_params)
+        transaction.customer_id = params[:customer_id]
         if transaction.save
           render json: transaction, status: 201, location: [:api, transaction]
         else
@@ -50,7 +45,7 @@ module Api
       end
 
       def transaction_params
-        params.require(:transaction).permit(:user, :customer, :amount, :status, :expiry)
+        params.require(:transaction).permit(:amount, :status, :expiry, :user)
       end
     end
   end
