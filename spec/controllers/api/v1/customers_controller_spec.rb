@@ -61,9 +61,24 @@ describe Api::V1::CustomersController do
         @customer_response = json_response
       end
 
-      it { expect(@customer_response[:customers].length).to eql(1) }
+      it { expect(@customer_response[:customers].length).to eql(21) }
       it { expect(@customer_response[:meta][:total]).to eql(21) }
       it { expect(@customer_response[:meta][:current]).to eql(2) }
+    end
+
+    context "when searching records" do
+      before(:each) do
+        user = create(:user)
+        api_authorization_header(user)
+        create(:customer, user: user, name: "Ikem")
+        3.times { create(:customer, user: user) }
+        get :index, q: "Ikem"
+        @customer_response = json_response
+      end
+
+      it { expect(@customer_response[:customers].length).to eql(1) }
+      it { expect(@customer_response[:meta][:total]).to eql(1) }
+      it { expect(@customer_response[:meta][:current]).to eql(1) }
     end
   end
 
