@@ -9,7 +9,7 @@ Contactlist::Application.routes.draw do
       resources :users, only: [:show, :create, :update, :destroy]
       post "auth/login", to: "sessions#create"
       get "auth/logout", to: "sessions#destroy"
-      # resources :sessions, only: [:create, :destroy]
+      resources :customers, only: [:index, :create, :update, :destroy, :show]
     end
   end
 end
