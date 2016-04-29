@@ -754,7 +754,7 @@
         null,
         1,
         1,
-        22,
+        28,
         null,
         null,
         1,
@@ -1183,6 +1183,11 @@
         1,
         1,
         1,
+        1,
+        1,
+        null
+      ],
+      "/Users/andela/Desktop/contactlist/app/serializers/transaction_serializer.rb": [
         1,
         1,
         null
