@@ -18,4 +18,9 @@ Contactlist::Application.routes.draw do
 
     end
   end
+  get "*unmatched_route", to: "application#no_route_found"
+  put "*unmatched_route", to: "application#no_route_found"
+  patch "*unmatched_route", to: "application#no_route_found"
+  post "*unmatched_route", to: "application#no_route_found"
+  delete "*unmatched_route", to: "application#no_route_found"
 end
