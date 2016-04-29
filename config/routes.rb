@@ -11,11 +11,10 @@ Contactlist::Application.routes.draw do
       get "auth/logout", to: "sessions#destroy"
 
       resources :customers, only: [:index, :create, :update, :destroy, :show] do
-        resources :transactions, only: [:create, :update]
+        resources :transactions, only: [:create, :update, :index, :show]
       end
 
-      resources :transactions, only: [:index, :show, :destroy]
-
+      resources :transactions, only: [:index, :destroy]
     end
   end
   get "*unmatched_route", to: "application#no_route_found"

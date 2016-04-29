@@ -9,7 +9,7 @@ describe Api::V1::TransactionsController do
       before(:each) do
         @transaction = create(:transaction, user: user, customer: customer)
         api_authorization_header(user)
-        get :show, id: @transaction.id
+        get :show, customer_id: customer.id, id: @transaction.id
       end
 
       it "expect to see transaction details" do
@@ -25,7 +25,7 @@ describe Api::V1::TransactionsController do
         @transaction = create(:transaction, user: user, customer: customer)
         api_authorization_header(user)
         user.logout
-        get :show, id: @transaction.id
+        get :show, customer_id: customer.id, id: @transaction.id
       end
 
       it "expect to see authentication error" do
@@ -57,12 +57,15 @@ describe Api::V1::TransactionsController do
       before(:each) do
         @transaction_attributes = attributes_for(:transaction, user: user)
         api_authorization_header(user)
-        post :create, customer_id: customer.id, transaction: @transaction_attributes
+        post :create,
+             customer_id: customer.id,
+             transaction: @transaction_attributes
       end
 
       it "renders the json attributes of the new record" do
         transaction_response = json_response[:transaction]
-        expect(transaction_response[:status]).to eql @transaction_attributes[:status]
+        expect(transaction_response[:status]).
+          to eql @transaction_attributes[:status]
       end
 
       it { should respond_with 201 }
@@ -72,7 +75,9 @@ describe Api::V1::TransactionsController do
       before(:each) do
         @transaction_attributes = attributes_for(:transaction, expiry: nil)
         api_authorization_header(user)
-        post :create, customer_id: customer.id, transaction: @transaction_attributes
+        post :create,
+             customer_id: customer.id,
+             transaction: @transaction_attributes
       end
 
       it "renders the json attributes of the new record" do
@@ -90,7 +95,10 @@ describe Api::V1::TransactionsController do
         @transaction = create(:transaction, user: user)
         @transaction_attr = attributes_for(:transaction, status: "Paid")
         api_authorization_header(user)
-        patch :update, customer_id: customer.id, id: @transaction.id, transaction: @transaction_attr
+        patch :update,
+              customer_id: customer.id,
+              id: @transaction.id,
+              transaction: @transaction_attr
       end
 
       it "renders the json attributes of the new record" do
@@ -106,7 +114,10 @@ describe Api::V1::TransactionsController do
         @transaction = create(:transaction, user: user)
         @transaction_attr = attributes_for(:transaction, expiry: nil)
         api_authorization_header(user)
-        patch :update, customer_id: customer.id, id: @transaction.id, transaction: @transaction_attr
+        patch :update,
+              customer_id: customer.id,
+              id: @transaction.id,
+              transaction: @transaction_attr
       end
 
       it "renders the json attributes of the new record" do
