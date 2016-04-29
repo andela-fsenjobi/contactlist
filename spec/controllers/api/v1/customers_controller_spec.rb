@@ -2,19 +2,38 @@ require "rails_helper"
 
 describe Api::V1::CustomersController do
   describe 'GET #show' do
-    before(:each) do
-      user = create :user
-      @customer = create(:customer, user: user)
-      api_authorization_header(user)
-      get :show, id: @customer.id
+    context "when user is logged in" do
+      before(:each) do
+        user = create :user
+        @customer = create(:customer, user: user)
+        api_authorization_header(user)
+        get :show, id: @customer.id
+      end
+
+      it "expect to see customer details" do
+        customer_response = json_response[:customer]
+        expect(customer_response[:name]).to eql @customer.name
+      end
+
+      it { should respond_with 200 }
     end
 
-    it "expect to see customer details" do
-      customer_response = json_response[:customer]
-      expect(customer_response[:name]).to eql @customer.name
-    end
+    context "when user is logged out" do
+      before(:each) do
+        user = create :user
+        @customer = create(:customer, user: user)
+        api_authorization_header(user)
+        user.logout
+        get :show, id: @customer.id
+      end
 
-    it { should respond_with 200 }
+      it "expect to see authentication error" do
+        customer_response = json_response
+        expect(customer_response[:errors]).to eql "Not authenticated"
+      end
+
+      it { should respond_with 401 }
+    end
   end
 
   describe 'GET #index' do

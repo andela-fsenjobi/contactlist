@@ -17,7 +17,7 @@ describe Api::V1::UsersController do
   describe 'POST #create' do
     context "when is successfully created" do
       before(:each) do
-        @user_attributes = FactoryGirl.attributes_for :user
+        @user_attributes = attributes_for :user
         put :create, user: @user_attributes
       end
 

@@ -94,7 +94,7 @@ This API comes fully tested! You can run the tests with `rspec`
 ###Live Demonstration
 This API is hosted at: `*herokuapp.com`
 
-###Contribution
+###Contributing to Contactlist
 You may make modifications and improvements on the application with the following procedures
 
 * Fork the repository
