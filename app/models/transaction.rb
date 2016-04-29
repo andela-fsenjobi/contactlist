@@ -4,4 +4,6 @@ class Transaction < ActiveRecord::Base
   validates :user, presence: true
   validates :customer, presence: true
   validates :expiry, presence: true
+
+  extend CanPaginate
 end

@@ -1,8 +1,8 @@
 module Api
   module V1
     class CustomersController < ApplicationController
-      before_action :set_customer, only: [:show, :update, :destroy]
       before_action :authenticate_with_token
+      before_action :set_customer, only: [:show, :update, :destroy]
       respond_to :json
 
       def show
@@ -10,8 +10,13 @@ module Api
       end
 
       def index
-        @customers = Customer.all
-        render json: @customers
+        page = params[:page].to_i > 0 ? params[:page].to_i : 1
+        limit = params[:limit].to_i > 0 ? params[:limit].to_i : 20
+        @customers = current_user.customers.paginate(page, limit)
+        render json: @customers, meta: {
+          total: current_user.customers.count,
+          current: page
+        }
       end
 
       def create
@@ -40,7 +45,10 @@ module Api
       private
 
       def set_customer
-        @customer ||= Customer.find(params[:id])
+        @customer ||= Customer.find_by(
+          id: params[:id],
+          user_id: current_user.id
+        )
       end
 
       def customer_params
