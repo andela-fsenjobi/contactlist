@@ -10,8 +10,13 @@ module Api
       end
 
       def index
-        @transactions = Transaction.all
-        render json: @transactions
+        page = params[:page].to_i > 0 ? params[:page].to_i : 1
+        limit = params[:limit].to_i > 0 ? params[:limit].to_i : 20
+        @transactions = current_user.transactions.paginate(page, limit)
+        render json: @transactions, meta: {
+          total: current_user.transactions.count,
+          current: page
+        }
       end
 
       def create

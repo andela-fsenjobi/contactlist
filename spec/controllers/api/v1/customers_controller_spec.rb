@@ -37,19 +37,34 @@ describe Api::V1::CustomersController do
   end
 
   describe 'GET #index' do
-    before(:each) do
-      user = create(:user)
-      api_authorization_header(user)
-      4.times { create(:customer, user: user) }
-      get :index
+    context "when records are less than 20" do
+      before(:each) do
+        user = create(:user)
+        api_authorization_header(user)
+        4.times { create(:customer, user: user) }
+        get :index
+        @customer_response = json_response
+      end
+
+      it { expect(@customer_response[:customers].length).to eql(4) }
+      it { expect(@customer_response[:meta][:total]).to eql(4) }
+      it { expect(@customer_response[:meta][:current]).to eql(1) }
+      it { should respond_with 200 }
     end
 
-    it do
-      customer_response = json_response
-      expect(customer_response[:customers].length).to eql(4)
-    end
+    context "when records are more than 20" do
+      before(:each) do
+        user = create(:user)
+        api_authorization_header(user)
+        21.times { create(:customer, user: user) }
+        get :index, page: 2
+        @customer_response = json_response
+      end
 
-    it { should respond_with 200 }
+      it { expect(@customer_response[:customers].length).to eql(1) }
+      it { expect(@customer_response[:meta][:total]).to eql(21) }
+      it { expect(@customer_response[:meta][:current]).to eql(2) }
+    end
   end
 
   describe 'POST #create' do
