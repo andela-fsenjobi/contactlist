@@ -64,6 +64,30 @@ describe Api::V1::TransactionsController do
       it { expect(@transaction_response[:meta][:current]).to eql(2) }
       it { expect(@transaction_response[:meta][:total]).to eql(24) }
     end
+
+    context "when customer_id is specified" do
+      before(:each) do
+        api_authorization_header(user)
+        5.times { create(:transaction, user: user) }
+        3.times { create(:transaction, user: user, customer: customer) }
+        get :index, customer_id: customer.id
+        @transaction_response = json_response
+      end
+
+      it { expect(@transaction_response[:transactions].length).to eql(3) }
+    end
+
+    context "when customer_id is not specified" do
+      before(:each) do
+        api_authorization_header(user)
+        5.times { create(:transaction, user: user) }
+        3.times { create(:transaction, user: user, customer: customer) }
+        get :index
+        @transaction_response = json_response
+      end
+
+      it { expect(@transaction_response[:transactions].length).to eql(8) }
+    end
   end
 
   describe 'POST #create' do
