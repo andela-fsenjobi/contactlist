@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428171903) do
+ActiveRecord::Schema.define(version: 20160503080039) do
 
   create_table "customers", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.string   "phone",      null: false
+    t.string   "name",                           null: false
+    t.string   "phone",                          null: false
     t.integer  "referer"
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",                        null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "transactions_count", default: 0
   end
 
   create_table "transactions", force: :cascade do |t|

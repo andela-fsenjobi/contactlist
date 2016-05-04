@@ -1,6 +1,7 @@
 require "api_constraints"
 
 Contactlist::Application.routes.draw do
+  root to: 'welcome#index'
   devise_for :users
   namespace :api, defaults: { format: :json },
                   path: "/api/" do
@@ -9,6 +10,9 @@ Contactlist::Application.routes.draw do
       resources :users, only: [:show, :create, :update, :destroy]
       post "auth/login", to: "sessions#create"
       get "auth/logout", to: "sessions#destroy"
+      get "stats/total", to: "stats#total"
+      get "stats/month", to: "stats#month"
+      get "stats/customers", to: "stats#customers"
 
       resources :customers, only: [:index, :create, :update, :destroy, :show] do
         resources :transactions, only: [:create, :update, :index, :show]

@@ -1,0 +1,639 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Contactlist API</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://andela.com'>Powered by Andela</a></li>
+            <li><a href='https://github.com/andela-fsenjobi'>See Femi on Github</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Welcome to the Contactlist API! You can use our API to access Contactlist API endpoints. With this you can keep track of transactions and customers.</p>
+
+<p>I run a small business and I have been looking at ways to use technology to make record keeping easy for myself. I came up with this API to solve this problem.</p>
+
+<p>You can make use of the available API endpoints for similar problems.</p>
+
+<h1 id="registration">Registration</h1>
+
+<blockquote>
+<p>To register, type this in your console:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/users?</span><span class="se">\</span><span class="s2">
+  user[email]=my@email.com&amp;user[password]=1qw23er45t"</span>
+
+</code></pre>
+
+<blockquote>
+<p>The response to the above should be of this nature:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">132</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"me@email.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1qw23er45ty67uu8r.9iwi92820900ei84irri93"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The API endpoints are only available to registered user. In order to have access, you would have to register.</p>
+
+<p>The email field is validated and thus, will return &lsquo;422 - Unprocessable Entity error&rsquo;</p>
+
+<p>The password field requires minimum of 6 characters</p>
+
+<h1 id="authentication">Authentication</h1>
+
+<blockquote>
+<p>To authorize, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/auth/login?</span><span class="se">\</span><span class="s2">
+  session[email]=my@email.com&amp;session[password]=1qw23er45t"</span>
+</code></pre>
+
+<blockquote>
+<p>The response to the above should be of this nature:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"me@email.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"auth_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1qw23er45ty67uu8r.9iwi92820900ei84irri93"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your have been logged in"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Once registered, you would have to login. If your authentication was successful, you would get a token, with which you can access all other endpoints.</p>
+
+<aside class="notice">
+Take note of your token. Without it,  you would not be able to access any other endpoint asides registration and login
+</aside>
+
+<h1 id="customers">Customers</h1>
+
+<table><thead>
+<tr>
+<th>HTTP Method</th>
+<th>Endpoint</th>
+<th>Use</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>/customer</td>
+<td>Create a customer</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/customers/</td>
+<td>Show list of all customers</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/customers/1</td>
+<td>Show details of a single customer</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>/customers/1</td>
+<td>Update details of a single customer</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/customers/1</td>
+<td>Delete customer from database</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Remember — all these endpoints require Authentication
+</aside>
+
+<p>Some of the above features are demonstrated below:</p>
+
+<h2 id="create">Create</h2>
+
+<blockquote>
+<p>To create a customer, type this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers? </span><span class="se">\</span><span class="s2">
+  customer[name]=Femi Adebayo&amp;customer[phone]=08123428749"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Femi Adebayo"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08123428749"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-31 10:00:00 +0100"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The Customer table has the following fields:</p>
+
+<ul>
+<li>Name</li>
+<li>Phone</li>
+<li>Referer (optional)</li>
+</ul>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers</code></li>
+<li>Method: POST</li>
+<li>Authentication: required</li>
+<li>Parameters: name, phone, referer (optional)</li>
+</ul>
+
+<h2 id="all-customers">All Customers</h2>
+
+<blockquote>
+<p>To view all customers, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Femi Adebayo"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08123428749"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-31 10:00:00 +0100"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers</code></li>
+<li>Method: GET</li>
+<li>Authentication: required</li>
+<li>Parameters: Since the result form this endpoint is paginated, you can specify the page number and number of items per page by supplying additional parameters.
+
+<ul>
+<li><strong>Page</strong>: You can pass on the required page number to the endpoint. For instance, by appending <code class="prettyprint">&amp;page=2</code> you are requesting for the second page.</li>
+<li><strong>Limit</strong>: By default the number of items per page is 20. You can specify your own limit by passing the parameter <code class="prettyprint">limit</code> to the endpoint. <code class="prettyprint">&amp;limit=30</code> will return 30 items for each request</li>
+<li><strong>Search query (optional)</strong>: You can search customers by number and name. The search query uses the <code class="prettyprint">LIKE</code> so that not just exact matches are returned. All items that match the query are returned. Result from the search is also paginated and can be combined with the <code class="prettyprint">page</code> and <code class="prettyprint">limit</code> parameters.</li>
+</ul></li>
+</ul>
+
+<h2 id="update-customer">Update Customer</h2>
+
+<blockquote>
+<p>To update a customer, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1? </span><span class="se">\</span><span class="s2">
+  customer[name]=Femi Adebajo"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Femi Adebajo"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08123428749"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-31 10:00:00 +0100"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1</code></li>
+<li>Method: PATCH</li>
+<li>Authentication: required</li>
+<li>Parameters: name, phone, referer etc</li>
+</ul>
+
+<h1 id="transactions">Transactions</h1>
+
+<table><thead>
+<tr>
+<th>HTTP Method</th>
+<th>Endpoint</th>
+<th>Use</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>/customers/1/transactions</td>
+<td>Create a new transaction</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/customers/1/transactions</td>
+<td>Show transactions from a particular customer</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/transactions</td>
+<td>Also works to display all transactions but from all customers</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/customers/1/transactions/1</td>
+<td>Show details of a single transactions</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>/customers/1/transactions/1</td>
+<td>Update transactions</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/customers/1/transactions/1</td>
+<td>Delete transactions from database</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Remember — all these endpoints require Authentication
+</aside>
+
+<p>Some of the above features are demonstrated below:</p>
+
+<h2 id="create-a-transaction">Create a Transaction</h2>
+
+<blockquote>
+<p>To create a transaction, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions? </span><span class="se">\</span><span class="s2">
+  transaction[amount]=200&amp;transaction[expiry]=2016-05-29"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paid"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-05-29"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-29T10:30:49.080Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The Transaction table has the following fields:</p>
+
+<ul>
+<li>Amount</li>
+<li>Expiry</li>
+<li>Status</li>
+</ul>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions</code></li>
+<li>Method: POST</li>
+<li>Authentication: required</li>
+</ul>
+
+<h2 id="all-transactions">All Transactions</h2>
+
+<blockquote>
+<p>To view all transactions, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/transactions"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paid"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-05-29"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-29T10:30:49.080Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-01"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-05-03T08:04:44.800Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-12"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-05-03T08:05:17.844Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"current"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions</code></li>
+<li>Method: GET</li>
+<li>Authentication: required</li>
+<li>Parameters: Since the result form this endpoint is paginated, you can specify the page number and number of items per page by supplying additional parameters.
+
+<ul>
+<li><strong>Page</strong>: You can pass on the required page number to the endpoint. For instance, by appending <code class="prettyprint">&amp;page=2</code> you are requesting for the second page.</li>
+<li><strong>Limit</strong>: By default the number of items per page is 20. You can specify your own limit by passing the parameter <code class="prettyprint">limit</code> to the endpoint. <code class="prettyprint">&amp;limit=30</code> will return 30 items for each request</li>
+<li><strong>Search query (optional)</strong>: You can search customers by number and name. The search query uses the <code class="prettyprint">LIKE</code> so that not just exact matches are returned. All items that match the query are returned. Result from the search is also paginated and can be combined with the <code class="prettyprint">page</code> and <code class="prettyprint">limit</code> parameters.</li>
+</ul></li>
+</ul>
+
+<h2 id="update-transaction">Update Transaction</h2>
+
+<blockquote>
+<p>To update a transaction, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions/1? </span><span class="se">\</span><span class="s2">
+  transaction[amount]=300&amp;transaction[status]=Paid"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Femi Adebajo"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08123428749"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-31 10:00:00 +0100"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>The Transaction table has the following fields:</p>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions/1</code></li>
+<li>Method: PATCH</li>
+<li>Authentication: required</li>
+</ul>
+
+<h1 id="stats">Stats</h1>
+
+<h2 id="total">Total</h2>
+
+<blockquote>
+<p>To view total statistics, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/total"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"total_customers"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"total_transactions"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"total_gains"</span><span class="p">:</span><span class="w"> </span><span class="mi">-800</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This API offers the opportunity to see statistics from all transactions and customers. This endpoint gives a summary of the users all-time statistics. Users can find out:</p>
+
+<ul>
+<li>How many customers they have all together</li>
+<li>How many transactions they have made all together</li>
+<li><p>How much profit you have made from all transactions</p>
+
+<ul>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/total</li>
+<li>Method: GET</li>
+<li>Authentication: required</li>
+</ul></li>
+</ul>
+
+<h2 id="month">Month</h2>
+
+<blockquote>
+<p>To view monthly statistics, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/month"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"month_customers"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"month_transactions"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"month_gains"</span><span class="p">:</span><span class="w"> </span><span class="mi">-800</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This API also offers the opportunity to see statistics from current month. This endpoint gives a summary of the users Users can find out:</p>
+
+<ul>
+<li>How many customers they added that month</li>
+<li>How many transactions they made that month</li>
+<li><p>How much profit accrued in the month</p>
+
+<ul>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/month</li>
+<li>Method: GET</li>
+<li>Authentication: required</li>
+</ul></li>
+</ul>
+
+<h2 id="customer">Customer</h2>
+
+<blockquote>
+<p>To view customer statistics, use this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
+  <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/customers"</span>
+</code></pre>
+
+<blockquote>
+<p>JSON Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Adewale"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08038454433"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"referer"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-28T14:17:11.418Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-28T14:17:11.418Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"transactions_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"YemisiAdeleye"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07068942010"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"referer"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-28T14:17:11.432Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-28T14:17:11.432Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"transactions_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Data is one key tool that can help to improve business. With data, one can determine where to focus all efforts. This API helps to find the most frequent customers:</p>
+
+<ul>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/customer</li>
+<li>Method: GET</li>
+<li>Authentication: required</li>
+</ul>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
