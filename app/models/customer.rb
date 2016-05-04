@@ -6,8 +6,13 @@ class Customer < ActiveRecord::Base
   validates :user, presence: true
 
   extend CanPaginate
+  extend Timify
 
   def self.search(search)
     where("name LIKE ? OR phone LIKE ?", "%#{search}%", "%#{search}%")
+  end
+
+  def self.top
+    order("transactions_count DESC")
   end
 end
