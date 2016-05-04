@@ -34,13 +34,37 @@ describe Api::V1::SessionsController do
     end
   end
 
-  describe 'DELETE #destroy' do
-    before(:each) do
-      @user = create(:user)
-      sign_in @user
-      delete :destroy, id: @user.id
+  describe 'GET #destroy' do
+    context "user logged in" do
+      before(:each) do
+        user = create(:user)
+        api_authorization_header(user)
+        get :destroy
+      end
+
+      it { expect(json_response[:message]).to eql "You are logged out" }
+      it { should respond_with 401 }
     end
 
-    it { should respond_with 401 }
+    context "user not logged in" do
+      before(:each) do
+        create(:user)
+        get :destroy
+      end
+
+      it { expect(json_response[:errors]).to eql "Not authenticated" }
+      it { should respond_with 401 }
+    end
+
+    context "user logged out" do
+      before(:each) do
+        user = create(:user)
+        api_authorization_header(user)
+        user.logout
+        get :destroy
+      end
+
+      it { expect(json_response[:errors]).to eql "Not authenticated" }
+    end
   end
 end

@@ -1,9 +1,9 @@
 module Api
   module V1
     class TransactionsController < ApplicationController
+      before_action :authenticate_with_token
       before_action :set_transaction, only: [:show, :update, :destroy]
       before_action :set_transactions, only: [:index]
-      before_action :authenticate_with_token
       respond_to :json
 
       def show
