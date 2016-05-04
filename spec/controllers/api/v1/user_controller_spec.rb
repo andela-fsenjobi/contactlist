@@ -51,7 +51,7 @@ describe Api::V1::UsersController do
   describe 'PUT/PATCH #update' do
     context "when is successfully updated" do
       before(:each) do
-        @user = create :user
+        @user = create(:user)
         api_authorization_header @user
         patch :update, id: @user.id, user: { email: "newmail@men.com" }
       end
@@ -64,7 +64,7 @@ describe Api::V1::UsersController do
 
     context "when is not edited" do
       before(:each) do
-        @user = create :user
+        @user = create(:user)
         api_authorization_header @user
         patch :update, id: @user.id, user: { email: "" }
       end

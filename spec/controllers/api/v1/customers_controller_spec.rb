@@ -4,7 +4,7 @@ describe Api::V1::CustomersController do
   describe 'GET #show' do
     context "when user is logged in" do
       before(:each) do
-        user = create :user
+        user = create(:user)
         @customer = create(:customer, user: user)
         api_authorization_header(user)
         get :show, id: @customer.id
@@ -20,7 +20,7 @@ describe Api::V1::CustomersController do
 
     context "when user is logged out" do
       before(:each) do
-        user = create :user
+        user = create(:user)
         @customer = create(:customer, user: user)
         api_authorization_header(user)
         user.logout
