@@ -1,9 +1,9 @@
 module Api
   module V1
     class TransactionsController < ApplicationController
+      before_action :authenticate_with_token
       before_action :set_transaction, only: [:show, :update, :destroy]
       before_action :set_transactions, only: [:index]
-      before_action :authenticate_with_token
       respond_to :json
 
       def show
@@ -13,9 +13,10 @@ module Api
       def index
         page = params[:page].to_i > 0 ? params[:page].to_i : 1
         limit = params[:limit].to_i > 0 ? params[:limit].to_i : 20
+        total = @transactions.count
         @transactions = @transactions.paginate(page, limit)
         render json: @transactions, meta: {
-          total: current_user.transactions.count,
+          total: total,
           current: page
         }
       end
