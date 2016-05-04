@@ -6,4 +6,8 @@ class Customer < ActiveRecord::Base
   validates :user, presence: true
 
   extend CanPaginate
+
+  def self.search(search)
+    where("name LIKE ? OR phone LIKE ?", "%#{search}%", "%#{search}%")
+  end
 end
