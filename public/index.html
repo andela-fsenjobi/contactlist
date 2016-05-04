@@ -130,7 +130,7 @@
 <p>To register, type this in your console:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/users?</span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/users?</span><span class="se">\</span><span class="s2">
   user[email]=my@email.com&amp;user[password]=1qw23er45t"</span>
 
 </code></pre>
@@ -157,7 +157,7 @@
 <p>To authorize, use this:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/auth/login?</span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/auth/login?</span><span class="se">\</span><span class="s2">
   session[email]=my@email.com&amp;session[password]=1qw23er45t"</span>
 </code></pre>
 
@@ -226,7 +226,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/customers? </span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers? </span><span class="se">\</span><span class="s2">
   customer[name]=Femi Adebayo&amp;customer[phone]=08123428749"</span>
 </code></pre>
 
@@ -252,7 +252,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers</code></li>
 <li>Method: POST</li>
 <li>Authentication: required</li>
 <li>Parameters: name, phone, referer (optional)</li>
@@ -265,7 +265,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/customers"</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers"</span>
 </code></pre>
 
 <blockquote>
@@ -284,7 +284,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers</code></li>
 <li>Method: GET</li>
 <li>Authentication: required</li>
 <li>Parameters: Since the result form this endpoint is paginated, you can specify the page number and number of items per page by supplying additional parameters.
@@ -303,7 +303,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/customers/1? </span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1? </span><span class="se">\</span><span class="s2">
   customer[name]=Femi Adebajo"</span>
 </code></pre>
 
@@ -323,7 +323,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers/1</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1</code></li>
 <li>Method: PATCH</li>
 <li>Authentication: required</li>
 <li>Parameters: name, phone, referer etc</li>
@@ -383,7 +383,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/customers/1/transactions? </span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions? </span><span class="se">\</span><span class="s2">
   transaction[amount]=200&amp;transaction[expiry]=2016-05-29"</span>
 </code></pre>
 
@@ -410,7 +410,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers/1/transactions</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions</code></li>
 <li>Method: POST</li>
 <li>Authentication: required</li>
 </ul>
@@ -422,7 +422,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/transactions"</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/transactions"</span>
 </code></pre>
 
 <blockquote>
@@ -462,7 +462,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers/1/transactions</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions</code></li>
 <li>Method: GET</li>
 <li>Authentication: required</li>
 <li>Parameters: Since the result form this endpoint is paginated, you can specify the page number and number of items per page by supplying additional parameters.
@@ -481,7 +481,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/customers/1/transactions/1? </span><span class="se">\</span><span class="s2">
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions/1? </span><span class="se">\</span><span class="s2">
   transaction[amount]=300&amp;transaction[status]=Paid"</span>
 </code></pre>
 
@@ -503,7 +503,7 @@ Remember — all these endpoints require Authentication
 <p>Requirements:</p>
 
 <ul>
-<li>Endpoint: <code class="prettyprint">http://localhost:3000/api/customers/1/transactions/1</code></li>
+<li>Endpoint: <code class="prettyprint">https://my-contactlist.herokuapp.com/api/customers/1/transactions/1</code></li>
 <li>Method: PATCH</li>
 <li>Authentication: required</li>
 </ul>
@@ -517,7 +517,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/stats/total"</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/total"</span>
 </code></pre>
 
 <blockquote>
@@ -540,7 +540,7 @@ Remember — all these endpoints require Authentication
 <li><p>How much profit you have made from all transactions</p>
 
 <ul>
-<li>Endpoint: http://localhost:3000/api/stats/total</li>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/total</li>
 <li>Method: GET</li>
 <li>Authentication: required</li>
 </ul></li>
@@ -553,7 +553,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/stats/month"</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/month"</span>
 </code></pre>
 
 <blockquote>
@@ -576,7 +576,7 @@ Remember — all these endpoints require Authentication
 <li><p>How much profit accrued in the month</p>
 
 <ul>
-<li>Endpoint: http://localhost:3000/api/stats/month</li>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/month</li>
 <li>Method: GET</li>
 <li>Authentication: required</li>
 </ul></li>
@@ -589,7 +589,7 @@ Remember — all these endpoints require Authentication
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
-  <span class="s2">"http://localhost:3000/api/stats/customers"</span>
+  <span class="s2">"https://my-contactlist.herokuapp.com/api/stats/customers"</span>
 </code></pre>
 
 <blockquote>
@@ -624,7 +624,7 @@ Remember — all these endpoints require Authentication
 <p>Data is one key tool that can help to improve business. With data, one can determine where to focus all efforts. This API helps to find the most frequent customers:</p>
 
 <ul>
-<li>Endpoint: http://localhost:3000/api/stats/customer</li>
+<li>Endpoint: https://my-contactlist.herokuapp.com/api/stats/customer</li>
 <li>Method: GET</li>
 <li>Authentication: required</li>
 </ul>

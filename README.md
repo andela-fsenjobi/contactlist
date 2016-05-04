@@ -20,7 +20,7 @@ Building this API will certainly make things easier. I can just make queries and
 >
 >**Parameters:** user[email], user[password]
 >
->`curl -X POST "http://localhost:3000/api/users?user[email]=my@email.com&user[password]=1qw23er45t"`
+>`curl -X POST "https://my-contactlist.herokuapp.com/api/users?user[email]=my@email.com&user[password]=1qw23er45t"`
 
 #####Updating a User
 >**Method:** PATCH
@@ -29,7 +29,7 @@ Building this API will certainly make things easier. I can just make queries and
 >
 >**Headers:** Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89 (Token from login)
 >
->`curl -X PATCH -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "http://localhost:3000/api/users/1/?user[email]=my@email.com&user[password]=1qw23er45t"`
+>`curl -X PATCH -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/?user[email]=my@email.com&user[password]=1qw23er45t"`
 >
 >**NB:** You will have to login again after updating the user details
 
@@ -38,7 +38,7 @@ Building this API will certainly make things easier. I can just make queries and
 >
 >**Headers:** Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89 (Token from login)
 >
->`curl -X GET -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "http://localhost:3000/api/users/1/`
+>`curl -X GET -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/`
 >
 >**NB:** You will have to login again after updating the user details
 
@@ -47,7 +47,7 @@ Building this API will certainly make things easier. I can just make queries and
 >
 >**Headers:** Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89 (Token from login)
 >
->`curl -X DELETE -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "http://localhost:3000/api/users/1/`
+>`curl -X DELETE -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/`
 >
 >**NB:** You will have to login again after updating the user details
 
@@ -55,31 +55,43 @@ Building this API will certainly make things easier. I can just make queries and
 #####Logging in a User
 >**Method:** POST
 >
->`curl -X POST "http://localhost:3000/api/users/?session[email]=my@email.com&session[password]=1qw23er45t`
+>`curl -X POST "https://my-contactlist.herokuapp.com/api/users/?session[email]=my@email.com&session[password]=1qw23er45t`
 
 #####Logging out a User
 >**Method:** GET
 >
 >**Headers:** Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89 (Token from login)
 >
->`curl -X GET -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "http://localhost:3000/api/users/1/`
+>`curl -X GET -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/`
 
 ####Customers:
-#####Creating a Customer
-#####Updating a Customer
-#####Viewing a Customer
-#####Deleting a Customer
-#####Creating a Customer
+You will be able to do the following:
+
+* Creating a Customer
+* Updating a Customer
+* Viewing a Customer
+* Deleting a Customer
+* Creating a Customer
+
+
 ####Transactions:
-#####Creating a Transaction
-#####Updating a Transaction
-#####Viewing a Transaction
-#####Deleting a Transaction
-#####Creating a Transaction
+You will be able to do any of the following
+
+* Creating a Transaction
+* Updating a Transaction
+* Viewing a Transaction
+* Deleting a Transaction
+* Creating a Transaction
+
+
 ####Other Features
-#####Pagination
-#####Most Active Customers
-#####Passive Customers
+* Pagination: Users can specify page number and number of records per page. The first page is returned by default and the number of records per page is 20. You can do this by appending either or both of `&page=2` and `&limit=30` to return the second page or return 30 records per page
+* Search: Users will be able to search customers by name or phone number. `q=Femi` will return customers whose name or number is `like` 'Femi'
+* Stats: The API also offers features
+
+	* Total Stats `/stats/total`: Here we can view total number of customers, number of transactions and total profit.
+	* Month's Stats `/stats/month`: Here we can see number of customers added in the month, number os transactions and month's profit.
+	* Customer Stats `/stats/customers`: (helps to see most frequest customers.
 
 ###Dependencies
 A complete list of dependencies can be found in the `Gemfile`
@@ -92,7 +104,7 @@ This API comes fully tested! You can run the tests with `rspec`
 * Create, Read, Update and Delete Customers' transactions
 
 ###Live Demonstration
-This API is hosted at: `*herokuapp.com`
+[See Contactlist on Heroku](https://my-contactlist.herokuapp.com)
 
 ###Contributing to Contactlist
 You may make modifications and improvements on the application with the following procedures

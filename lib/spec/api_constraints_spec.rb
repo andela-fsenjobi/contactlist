@@ -6,7 +6,7 @@ describe ApiConstraints do
 
   describe "matches?" do
     it "returns true when the version matches the 'Accept' header" do
-      request = double(host: "http://localhost:3000",
+      request = double(host: "https://my-contactlist.herokuapp.com",
                        headers: {
                          "Accept" => "application/vnd.contactlist.v1"
                        })
@@ -14,7 +14,7 @@ describe ApiConstraints do
     end
 
     it "returns the default version when 'default' option is specified" do
-      request = double(host: "http://localhost:3000")
+      request = double(host: "https://my-contactlist.herokuapp.com")
       expect(api_constraints_v2.matches?(request)).to be_truthy
     end
   end
