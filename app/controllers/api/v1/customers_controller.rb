@@ -4,7 +4,6 @@ module Api
       before_action :authenticate_with_token
       before_action :set_customer, only: [:show, :update, :destroy]
       before_action :get_customers, only: [:index]
-      respond_to :json
 
       def show
         render json: @customer
@@ -15,8 +14,8 @@ module Api
         limit = params[:limit].to_i > 0 ? params[:limit].to_i : 20
         @customers.paginate(page, limit)
         render json: @customers, meta: {
-          total: @customers.count,
-          current: page
+          total_records: @customers.count,
+          current_page: page
         }
       end
 
@@ -53,7 +52,7 @@ module Api
       end
 
       def customer_params
-        params.require(:customer).permit(:name, :phone, :referer, :user)
+        params.permit(:name, :phone, :referer, :user)
       end
 
       def get_customers

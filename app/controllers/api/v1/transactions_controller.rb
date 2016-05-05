@@ -4,7 +4,6 @@ module Api
       before_action :authenticate_with_token
       before_action :set_transaction, only: [:show, :update, :destroy]
       before_action :set_transactions, only: [:index]
-      respond_to :json
 
       def show
         render json: @transaction
@@ -16,8 +15,8 @@ module Api
         total = @transactions.count
         @transactions = @transactions.paginate(page, limit)
         render json: @transactions, meta: {
-          total: total,
-          current: page
+          total_records: total,
+          current_page: page
         }
       end
 
@@ -63,7 +62,7 @@ module Api
       end
 
       def transaction_params
-        params.require(:transaction).permit(:amount, :status, :expiry, :user)
+        params.permit(:amount, :status, :expiry, :user)
       end
     end
   end

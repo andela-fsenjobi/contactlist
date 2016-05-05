@@ -4,8 +4,8 @@ module Api
       before_action :authenticate_with_token, only: [:destroy]
 
       def create
-        user_email = params[:session][:email]
-        user_password = params[:session][:password]
+        user_email = params[:email]
+        user_password = params[:password]
         user = user_email.present? && User.find_by(email: user_email)
 
         if user.valid_password? user_password
