@@ -18,18 +18,18 @@ Building this API will certainly make things easier. I can just make queries and
 #####Creating a User
 >**Method:** POST
 >
->**Parameters:** user[email], user[password]
+>**Parameters:** email, password
 >
->`curl -X POST "https://my-contactlist.herokuapp.com/api/users?user[email]=my@email.com&user[password]=1qw23er45t"`
+>`curl -X POST "https://my-contactlist.herokuapp.com/api/users?email=my@email.com&password=1qw23er45t"`
 
 #####Updating a User
 >**Method:** PATCH
 >
->**Parameters:** user[email], user[password]
+>**Parameters:** email, password
 >
 >**Headers:** Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89 (Token from login)
 >
->`curl -X PATCH -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/?user[email]=my@email.com&user[password]=1qw23er45t"`
+>`curl -X PATCH -H "Authorization: 1qasw23EDF4RFF55tsgyeyey.u3uhdjjueu8ueueu89" "https://my-contactlist.herokuapp.com/api/users/1/?email=my@email.com&password=1qw23er45t"`
 >
 >**NB:** You will have to login again after updating the user details
 
@@ -55,7 +55,7 @@ Building this API will certainly make things easier. I can just make queries and
 #####Logging in a User
 >**Method:** POST
 >
->`curl -X POST "https://my-contactlist.herokuapp.com/api/users/?session[email]=my@email.com&session[password]=1qw23er45t`
+>`curl -X POST "https://my-contactlist.herokuapp.com/api/users/?email=my@email.com&password=1qw23er45t`
 
 #####Logging out a User
 >**Method:** GET

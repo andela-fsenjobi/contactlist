@@ -131,7 +131,7 @@
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/users?</span><span class="se">\</span><span class="s2">
-  user[email]=my@email.com&amp;user[password]=1qw23er45t"</span>
+  email=my@email.com&amp;password=1qw23er45t"</span>
 
 </code></pre>
 
@@ -158,7 +158,7 @@
 </blockquote>
 <pre class="highlight shell"><code>curl -X POST <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/auth/login?</span><span class="se">\</span><span class="s2">
-  session[email]=my@email.com&amp;session[password]=1qw23er45t"</span>
+  email=my@email.com&amp;password=1qw23er45t"</span>
 </code></pre>
 
 <blockquote>
@@ -227,7 +227,7 @@ Remember — all these endpoints require Authentication
 <pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/customers? </span><span class="se">\</span><span class="s2">
-  customer[name]=Femi Adebayo&amp;customer[phone]=08123428749"</span>
+  name=Femi Adebayo&amp;phone=08123428749"</span>
 </code></pre>
 
 <blockquote>
@@ -304,7 +304,7 @@ Remember — all these endpoints require Authentication
 <pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1? </span><span class="se">\</span><span class="s2">
-  customer[name]=Femi Adebajo"</span>
+  name=Femi Adebajo"</span>
 </code></pre>
 
 <blockquote>
@@ -384,7 +384,7 @@ Remember — all these endpoints require Authentication
 <pre class="highlight shell"><code>curl -X POST -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions? </span><span class="se">\</span><span class="s2">
-  transaction[amount]=200&amp;transaction[expiry]=2016-05-29"</span>
+  amount=200&amp;expiry=2016-05-29"</span>
 </code></pre>
 
 <blockquote>
@@ -482,7 +482,7 @@ Remember — all these endpoints require Authentication
 <pre class="highlight shell"><code>curl -X PATCH -H <span class="se">\</span>
   <span class="s2">"Authorization: &lt;insert your token here&gt;"</span> <span class="se">\</span>
   <span class="s2">"https://my-contactlist.herokuapp.com/api/customers/1/transactions/1? </span><span class="se">\</span><span class="s2">
-  transaction[amount]=300&amp;transaction[status]=Paid"</span>
+  amount=300&amp;status=Paid"</span>
 </code></pre>
 
 <blockquote>
