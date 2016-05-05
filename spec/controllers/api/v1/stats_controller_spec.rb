@@ -23,13 +23,15 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :total
-      @stat_response = json_response[:data]
     end
 
-    it { expect(@stat_response[:total_customers]).to eql 2 }
-    it { expect(@stat_response[:total_transactions]).to eql 6 }
-    it { expect(@stat_response[:total_gains]).to eql 1200 }
-    it { should respond_with 200 }
+    it do
+      stat_response = json_response
+      expect(stat_response[:total_customers]).to eql 2
+      expect(stat_response[:total_transactions]).to eql 6
+      expect(stat_response[:total_gains]).to eql 1200
+      should respond_with 200
+    end
   end
 
   describe 'GET #month' do
@@ -52,13 +54,15 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :month
-      @stat_response = json_response[:data]
     end
 
-    it { expect(@stat_response[:month_customers]).to eql 2 }
-    it { expect(@stat_response[:month_transactions]).to eql 3 }
-    it { expect(@stat_response[:month_gains]).to eql 600 }
-    it { should respond_with 200 }
+    it do
+      stat_response = json_response
+      expect(stat_response[:month_customers]).to eql 2
+      expect(stat_response[:month_transactions]).to eql 3
+      expect(stat_response[:month_gains]).to eql 600
+      should respond_with 200
+    end
   end
 
   describe 'POST #customers' do
@@ -80,12 +84,14 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :customers
-      @stat_response = json_response[:data]
     end
 
-    it { expect(@stat_response.length).to eql 2 }
-    it { expect(@stat_response.first[:transactions_count]).to eql 6 }
-    it { expect(@stat_response.last[:transactions_count]).to eql 0 }
-    it { should respond_with 200 }
+    it do
+      stat_response = json_response[:stats]
+      expect(stat_response.length).to eql 2
+      expect(stat_response.first[:transactions_count]).to eql 6
+      expect(stat_response.last[:transactions_count]).to eql 0
+      should respond_with 200
+    end
   end
 end
