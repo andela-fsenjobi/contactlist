@@ -14,4 +14,18 @@ describe Transaction do
 
     it { expect(transaction).not_to be_valid }
   end
+
+  context "when amount is not specified" do
+    it do
+      transaction = create(:transaction, amount: 0, status: nil)
+      expect(transaction.status).to eq "Unpaid"
+    end
+  end
+
+  context "when amount is specified" do
+    it do
+      transaction = create(:transaction, amount: 100, status: nil)
+      expect(transaction.status).to eq "Paid"
+    end
+  end
 end
