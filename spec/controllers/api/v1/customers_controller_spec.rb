@@ -59,7 +59,7 @@ describe Api::V1::CustomersController do
 
       it do
         customer_response = json_response
-        expect(customer_response[:customers].length).to eql(21)
+        expect(customer_response[:customers].length).to eql(1)
         expect(customer_response[:meta][:total_records]).to eql(21)
         expect(customer_response[:meta][:current_page]).to eql(2)
       end
@@ -136,7 +136,7 @@ describe Api::V1::CustomersController do
 
       it "renders the json attributes of the new record" do
         customer_response = json_response
-        expect(customer_response[:error]).to eql "Customer not created"
+        expect(customer_response[:error]).to eql "Customer not updated"
         should respond_with 422
       end
     end

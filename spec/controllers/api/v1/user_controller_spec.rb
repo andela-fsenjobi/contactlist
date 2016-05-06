@@ -4,7 +4,7 @@ describe Api::V1::UsersController do
   let(:user) { create(:user) }
   describe 'GET #show' do
     before(:each) do
-      api_authorization_header user
+      api_authorization_header(user)
       get :show, id: user.id
     end
 
@@ -19,7 +19,7 @@ describe Api::V1::UsersController do
       it "renders the json representation for the user record just created" do
         user_attributes = attributes_for :user
         put :create, user_attributes
-        user_response = json_response[:user]
+        user_response = json_response
         expect(user_response[:email]).to eql user_attributes[:email]
       end
     end

@@ -151,7 +151,7 @@ describe Api::V1::TransactionsController do
               id: transaction.id,
               expiry: nil
         transaction_response = json_response
-        expect(transaction_response[:error]).to eql "Transaction not created"
+        expect(transaction_response[:error]).to eql "Transaction not updated"
         should respond_with 422
       end
     end
