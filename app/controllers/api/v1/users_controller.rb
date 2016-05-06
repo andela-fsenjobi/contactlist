@@ -2,7 +2,6 @@ module Api
   module V1
     class UsersController < ApplicationController
       skip_before_action :authenticate_with_token, only: [:create]
-      respond_to :json
 
       def show
         render json: current_user
@@ -11,9 +10,13 @@ module Api
       def create
         user = User.new(user_params)
         if user.save
+          user.login
+          payload = { email: user.email, id: user.id }
+          token = JsonWebToken.encode payload
           data = {
-            user: user,
-            message: "User successfully created. Login to continue"
+            email: user.email,
+            token: token,
+            message: "User successfully created."
           }
           render json: data, status: 201
         else
@@ -38,7 +41,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:email, :password, :password_confirmation)
+        params.permit(:email, :password, :password_confirmation)
       end
     end
   end

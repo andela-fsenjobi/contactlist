@@ -1,40 +1,26 @@
 module Api
   module V1
     class CustomersController < ApplicationController
+      include SaveHelper
       before_action :authenticate_with_token
       before_action :set_customer, only: [:show, :update, :destroy]
       before_action :get_customers, only: [:index]
-      respond_to :json
 
       def show
         render json: @customer
       end
 
       def index
-        page = params[:page].to_i > 0 ? params[:page].to_i : 1
-        limit = params[:limit].to_i > 0 ? params[:limit].to_i : 20
-        @customers.paginate(page, limit)
-        render json: @customers, meta: {
-          total: @customers.count,
-          current: page
-        }
+        default @customers, params
       end
 
       def create
         customer = current_user.customers.build(customer_params)
-        if customer.save
-          render json: customer, status: 201, location: [:api, customer]
-        else
-          render json: { error: "Customer not created" }, status: 422
-        end
+        save customer
       end
 
       def update
-        if @customer.update(customer_params)
-          render json: @customer, status: 201, location: [:api, @customer]
-        else
-          render json: { error: "Customer not created" }, status: 422
-        end
+        edit @customer, customer_params
       end
 
       def destroy
@@ -53,7 +39,7 @@ module Api
       end
 
       def customer_params
-        params.require(:customer).permit(:name, :phone, :referer, :user)
+        params.permit(:name, :phone, :referer, :user)
       end
 
       def get_customers

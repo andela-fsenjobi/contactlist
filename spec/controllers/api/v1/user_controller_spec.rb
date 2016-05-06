@@ -1,48 +1,41 @@
 require "rails_helper"
 
 describe Api::V1::UsersController do
+  let(:user) { create(:user) }
   describe 'GET #show' do
     before(:each) do
-      @user = create(:user)
-      api_authorization_header @user
-      get :show, id: @user.id
+      api_authorization_header(user)
+      get :show, id: user.id
     end
 
     it "returns the information about a user on a hash" do
       user_response = json_response[:user]
-      expect(user_response[:email]).to eql @user.email
+      expect(user_response[:email]).to eql user.email
     end
   end
 
   describe 'POST #create' do
     context "when is successfully created" do
-      before(:each) do
-        @user_attributes = attributes_for :user
-        put :create, user: @user_attributes
-      end
-
       it "renders the json representation for the user record just created" do
-        user_response = json_response[:user]
-        expect(user_response[:email]).to eql @user_attributes[:email]
+        user_attributes = attributes_for :user
+        put :create, user_attributes
+        user_response = json_response
+        expect(user_response[:email]).to eql user_attributes[:email]
       end
     end
 
     context "when is not created" do
       before(:each) do
-        @invalid_user_attributes = {
+        invalid_user_attributes = {
           password: "12345678",
           password_confirmation: "12345678"
         }
-        put :create, user: @invalid_user_attributes
+        put :create, invalid_user_attributes
       end
 
       it "renders an errors json" do
         user_response = json_response
         expect(user_response).to have_key(:errors)
-      end
-
-      it "renders the json errors on whye the user could not be created" do
-        user_response = json_response
         expect(user_response[:errors][:email]).to include "can't be blank"
       end
     end
@@ -51,9 +44,8 @@ describe Api::V1::UsersController do
   describe 'PUT/PATCH #update' do
     context "when is successfully updated" do
       before(:each) do
-        @user = create(:user)
-        api_authorization_header @user
-        patch :update, id: @user.id, user: { email: "newmail@men.com" }
+        api_authorization_header(user)
+        patch :update, id: user.id, email: "newmail@men.com"
       end
 
       it "renders the json representation for the user record just created" do
@@ -64,18 +56,13 @@ describe Api::V1::UsersController do
 
     context "when is not edited" do
       before(:each) do
-        @user = create(:user)
-        api_authorization_header @user
-        patch :update, id: @user.id, user: { email: "" }
+        api_authorization_header user
+        patch :update, id: user.id, email: ""
       end
 
       it "renders an errors json" do
         user_response = json_response
         expect(user_response).to have_key(:errors)
-      end
-
-      it "renders the json errors on whye the user could not be created" do
-        user_response = json_response
         expect(user_response[:errors][:email]).to include "can't be blank"
       end
     end
@@ -84,9 +71,8 @@ describe Api::V1::UsersController do
   describe 'DELETE #destroy' do
     context "successfully deletes" do
       before(:each) do
-        @user = create(:user)
-        api_authorization_header @user
-        delete :destroy, id: @user.id
+        api_authorization_header user
+        delete :destroy, id: user.id
       end
 
       it "expect user to be deleted" do
