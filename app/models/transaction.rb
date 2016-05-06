@@ -4,7 +4,12 @@ class Transaction < ActiveRecord::Base
   validates :user, presence: true
   validates :customer, presence: true
   validates :expiry, presence: true
+  before_save :set_status
 
   extend CanPaginate
   extend Timify
+
+  def set_status
+    self.status = self.amount > 0 ? "Paid" : "Unpaid"
+  end
 end
