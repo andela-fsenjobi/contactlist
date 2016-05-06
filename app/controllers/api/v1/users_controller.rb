@@ -10,9 +10,13 @@ module Api
       def create
         user = User.new(user_params)
         if user.save
+          user.login
+          payload = { email: user.email, id: user.id }
+          token = JsonWebToken.encode payload
           data = {
-            user: user,
-            message: "User successfully created. Login to continue"
+            email: user.email,
+            token: token,
+            message: "User successfully created."
           }
           render json: data, status: 201
         else
