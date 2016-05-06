@@ -3,7 +3,8 @@ module SaveHelper
     if object.save
       render json: object, status: 201, location: [:api, object]
     else
-      render json: { error: "#{object.class.name.capitalize} not created" }, status: 422
+      render json: { error: "#{object.class.name.capitalize} not created" },
+             status: 422
     end
   end
 
@@ -11,7 +12,8 @@ module SaveHelper
     if object.update(params)
       render json: object, status: 201, location: [:api, object]
     else
-      render json: { error: "#{object.class.name.capitalize} not updated" }, status: 422
+      render json: { error: "#{object.class.name.capitalize} not updated" },
+             status: 422
     end
   end
 

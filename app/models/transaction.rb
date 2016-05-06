@@ -10,6 +10,6 @@ class Transaction < ActiveRecord::Base
   extend Timify
 
   def set_status
-    self.status = self.amount > 0 ? "Paid" : "Unpaid"
+    self.status = amount > 0 ? "Paid" : "Unpaid"
   end
 end
