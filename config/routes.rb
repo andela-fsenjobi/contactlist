@@ -3,9 +3,10 @@ require "api_constraints"
 Contactlist::Application.routes.draw do
   root to: 'welcome#index'
   devise_for :users
-  namespace :api, defaults: { format: :json },
-                  path: "/api/" do
-    scope module: :v1,
+  namespace :api, defaults: { format: :json } do
+    scope "(:module)",
+          module: :v1,
+          defaults: { path: :v1 },
           constraints: ApiConstraints.new(version: 1, default: true) do
       resources :users, only: [:show, :create, :update, :destroy]
       post "auth/login", to: "sessions#create"
@@ -14,7 +15,7 @@ Contactlist::Application.routes.draw do
       get "stats/month", to: "stats#month"
       get "stats/customers", to: "stats#customers"
 
-      resources :customers, only: [:index, :create, :update, :destroy, :show] do
+      resources :customers do
         resources :transactions, only: [:create, :update, :index, :show]
       end
 
