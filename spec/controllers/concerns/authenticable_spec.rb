@@ -37,7 +37,7 @@ describe Authenticable do
 
     it "renders a an error message" do
       expect(json_response[:errors]).to eql "Not Authenticated"
-      should respond_with 401
+      is_expected.to respond_with 401
     end
   end
 
@@ -47,9 +47,9 @@ describe Authenticable do
         expect(authentication).to receive(:current_user).and_return(user)
       end
 
-      it do
+      it "returns that the user is signed in" do
         user.login
-        should be_user_signed_in
+        is_expected.to be_user_signed_in
       end
     end
 
@@ -58,7 +58,7 @@ describe Authenticable do
         allow(authentication).to receive(:current_user).and_return(nil)
       end
 
-      it { should_not be_user_signed_in }
+      it { is_expected.to_not be_user_signed_in }
     end
   end
 end
