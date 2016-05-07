@@ -13,7 +13,7 @@ describe Api::V1::CustomersController do
       it "expect to see customer details" do
         customer_response = json_response[:customer]
         expect(customer_response[:name]).to eql @customer.name
-        should respond_with 200
+        is_expected.to respond_with 200
       end
     end
 
@@ -28,7 +28,7 @@ describe Api::V1::CustomersController do
       it "expect to see authentication error" do
         customer_response = json_response
         expect(customer_response[:errors]).to eql "Not authenticated"
-        should respond_with 401
+        is_expected.to respond_with 401
       end
     end
   end
@@ -41,12 +41,12 @@ describe Api::V1::CustomersController do
         get :index
       end
 
-      it do
+      it "returns all records by default" do
         customer_response = json_response
         expect(customer_response[:customers].length).to eql(4)
         expect(customer_response[:meta][:total_records]).to eql(4)
         expect(customer_response[:meta][:current_page]).to eql(1)
-        should respond_with 200
+        is_expected.to respond_with 200
       end
     end
 
@@ -57,7 +57,7 @@ describe Api::V1::CustomersController do
         get :index, page: 2
       end
 
-      it do
+      it "returns one record on the second page" do
         customer_response = json_response
         expect(customer_response[:customers].length).to eql(1)
         expect(customer_response[:meta][:total_records]).to eql(21)
@@ -73,7 +73,7 @@ describe Api::V1::CustomersController do
         get :index, q: "Ikem"
       end
 
-      it do
+      it "returns item that matches the search query" do
         customer_response = json_response
         expect(customer_response[:customers].length).to eql(1)
         expect(customer_response[:meta][:total_records]).to eql(1)
@@ -93,7 +93,7 @@ describe Api::V1::CustomersController do
       it "renders the json attributes of the new record" do
         customer_response = json_response[:customer]
         expect(customer_response[:phone]).to eql @customer_attributes[:phone]
-        should respond_with 201
+        is_expected.to respond_with 201
       end
     end
 
@@ -104,10 +104,10 @@ describe Api::V1::CustomersController do
         post :create, customer: customer_attributes
       end
 
-      it "renders the json attributes of the new record" do
+      it "returns a failure message" do
         customer_response = json_response
         expect(customer_response[:error]).to eql "Customer not created"
-        should respond_with 422
+        is_expected.to respond_with 422
       end
     end
   end
@@ -120,10 +120,10 @@ describe Api::V1::CustomersController do
         patch :update, id: customer.id, name: "Adebee"
       end
 
-      it "renders the json attributes of the new record" do
+      it "renders the json attributes of the updated record" do
         customer_response = json_response[:customer]
         expect(customer_response[:name]).to eql "Adebee"
-        should respond_with 201
+        is_expected.to respond_with 201
       end
     end
 
@@ -134,10 +134,10 @@ describe Api::V1::CustomersController do
         patch :update, id: customer.id, name: ""
       end
 
-      it "renders the json attributes of the new record" do
+      it "returns that customer was not updated" do
         customer_response = json_response
         expect(customer_response[:error]).to eql "Customer not updated"
-        should respond_with 422
+        is_expected.to respond_with 422
       end
     end
   end
@@ -150,10 +150,10 @@ describe Api::V1::CustomersController do
         delete :destroy, id: customer.id
       end
 
-      it "renders the json attributes of the new record" do
+      it "gives success message" do
         customer_response = json_response
         expect(customer_response[:message]).to eql "Record deleted"
-        should respond_with 204
+        is_expected.to respond_with 204
       end
     end
   end

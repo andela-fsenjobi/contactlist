@@ -12,7 +12,7 @@ describe Api::V1::SessionsController do
       it "returns the corresponding records" do
         user.reload
         expect(json_response[:email]).to eql user.email
-        should respond_with 200
+        is_expected.to respond_with 200
       end
     end
 
@@ -24,7 +24,7 @@ describe Api::V1::SessionsController do
 
       it "returns the corresponding records" do
         expect(json_response[:error]).to eql "Invalid login credentials"
-        should respond_with 422
+        is_expected.to respond_with 422
       end
     end
   end
@@ -36,9 +36,9 @@ describe Api::V1::SessionsController do
         get :destroy
       end
 
-      it do
+      it "informs user he has been logged out" do
         expect(json_response[:message]).to eql "You are logged out"
-        should respond_with 401
+        is_expected.to respond_with 401
       end
     end
 
@@ -48,9 +48,9 @@ describe Api::V1::SessionsController do
         get :destroy
       end
 
-      it do
+      it "inform user he is not authenticated" do
         expect(json_response[:errors]).to eql "Not authenticated"
-        should respond_with 401
+        is_expected.to respond_with 401
       end
     end
 

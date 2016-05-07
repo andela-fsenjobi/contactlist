@@ -25,12 +25,12 @@ describe Api::V1::StatsController do
       get :total
     end
 
-    it do
+    it "returns all time statistics" do
       stat_response = json_response
       expect(stat_response[:total_customers]).to eql 2
       expect(stat_response[:total_transactions]).to eql 6
       expect(stat_response[:total_gains]).to eql 1200
-      should respond_with 200
+      is_expected.to respond_with 200
     end
   end
 
@@ -56,12 +56,12 @@ describe Api::V1::StatsController do
       get :month
     end
 
-    it do
+    it "returns currrent month's statistics" do
       stat_response = json_response
       expect(stat_response[:month_customers]).to eql 2
       expect(stat_response[:month_transactions]).to eql 3
       expect(stat_response[:month_gains]).to eql 600
-      should respond_with 200
+      is_expected.to respond_with 200
     end
   end
 
@@ -86,12 +86,12 @@ describe Api::V1::StatsController do
       get :customers
     end
 
-    it do
+    it "returns customers sorted by number of transactions" do
       stat_response = json_response[:stats]
       expect(stat_response.length).to eql 2
       expect(stat_response.first[:transactions_count]).to eql 6
       expect(stat_response.last[:transactions_count]).to eql 0
-      should respond_with 200
+      is_expected.to respond_with 200
     end
   end
 end

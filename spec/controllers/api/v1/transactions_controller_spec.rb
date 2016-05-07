@@ -15,7 +15,7 @@ describe Api::V1::TransactionsController do
       it "expect to see transaction details" do
         transaction_response = json_response[:transaction]
         expect(transaction_response[:status]).to eql @transaction.status
-        should respond_with 200
+        is_expected.to respond_with 200
       end
     end
 
@@ -30,7 +30,7 @@ describe Api::V1::TransactionsController do
       it "expect to see authentication error" do
         transaction_response = json_response
         expect(transaction_response[:errors]).to eql "Not authenticated"
-        should respond_with 401
+        is_expected.to respond_with 401
       end
     end
   end
@@ -43,12 +43,12 @@ describe Api::V1::TransactionsController do
         get :index
       end
 
-      it do
+      it "returns all records on default page" do
         transaction_response = json_response
         expect(transaction_response[:transactions].length).to eql(4)
         expect(transaction_response[:meta][:current_page]).to eql(1)
         expect(transaction_response[:meta][:total_records]).to eql(4)
-        should respond_with 200
+        is_expected.to respond_with 200
       end
     end
 
@@ -59,7 +59,7 @@ describe Api::V1::TransactionsController do
         get :index, page: 2
       end
 
-      it do
+      it "returns the last 4 records on the second page" do
         transaction_response = json_response
         expect(transaction_response[:transactions].length).to eql(4)
         expect(transaction_response[:meta][:current_page]).to eql(2)
@@ -75,7 +75,7 @@ describe Api::V1::TransactionsController do
         get :index, customer_id: customer.id
       end
 
-      it do
+      it "returns transactions belonging to the customer" do
         transaction_response = json_response
         expect(transaction_response[:transactions].length).to eql(3)
       end
@@ -89,7 +89,7 @@ describe Api::V1::TransactionsController do
         get :index
       end
 
-      it do
+      it "returns transactions belonging to the user" do
         transaction_response = json_response
         expect(transaction_response[:transactions].length).to eql(8)
       end
@@ -112,7 +112,7 @@ describe Api::V1::TransactionsController do
         transaction_response = json_response[:transaction]
         expect(transaction_response[:status]).
           to eql @transaction_attributes[:status]
-        should respond_with 201
+        is_expected.to respond_with 201
       end
     end
 
@@ -122,7 +122,7 @@ describe Api::V1::TransactionsController do
         post :create, customer_id: customer.id, expiry: nil
         transaction_response = json_response
         expect(transaction_response[:error]).to eql "Transaction not created"
-        should respond_with 422
+        is_expected.to respond_with 422
       end
     end
   end
@@ -138,7 +138,7 @@ describe Api::V1::TransactionsController do
               status: "Paid"
         transaction_response = json_response[:transaction]
         expect(transaction_response[:status]).to eql "Paid"
-        should respond_with 201
+        is_expected.to respond_with 201
       end
     end
 
@@ -152,7 +152,7 @@ describe Api::V1::TransactionsController do
               expiry: nil
         transaction_response = json_response
         expect(transaction_response[:error]).to eql "Transaction not updated"
-        should respond_with 422
+        is_expected.to respond_with 422
       end
     end
   end
@@ -165,7 +165,7 @@ describe Api::V1::TransactionsController do
         delete :destroy, id: transaction.id
         transaction_response = json_response
         expect(transaction_response[:message]).to eql "Record deleted"
-        should respond_with 204
+        is_expected.to respond_with 204
       end
     end
   end

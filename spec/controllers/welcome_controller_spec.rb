@@ -2,9 +2,10 @@ require "rails_helper"
 
 describe WelcomeController do
   describe "#index" do
-    it "should be successful" do
+    it "is_expected.to be successful" do
       get :index
-      should respond_with 200
+      is_expected.to respond_with 200
+      expect(response.body).to include "Authentication"
     end
   end
 end
