@@ -13,6 +13,30 @@ Building this API will certainly make things easier. I can just make queries and
 * Setup the database with `rake db:migrate` (Also run `rake db:seed` if you want to use the seed data.)
 * Run `rails s` and you can begin to use the API endpoints
 
+###Available Endpoints
+| Methods   |      Endpoints      |  Params        | Secured |
+|-----------|---------------------|----------------------|-------|
+| POST      | /api/users          | email, password      | false |
+| GET       | /api/users/id       | none                 | true  |
+| PATCH/PUT | /api/users/id       | email, password      | true  |
+| DELETE    | /api/users/id       | none                 | true  |
+| POST      | /api/auth/login     | email, password      | false |
+| GET       | /api/auth/logout    | none                 | true  |
+| POST      | /api/customers      | name, phone, referer | true  |
+| GET       | /api/customers/id   | none | true |
+| GET       | /api/customers/  | none | true |
+| PATH/PUT  | /api/customers/id   | name, phone, referer | true |
+| DELETE    | /api/customers/id   | none | true |
+| GET       | /api/customers/id   | none | true |
+| POST      | /api/customers/id/transactions      | amount, expiry, status | true  |
+| GET      | /api/transactions      | none | true  |
+| GET       | /api/customers/id/transactions   | none | true |
+| GET       | /api/customers/id/transactions/id | none | true |
+| PATH/PUT  | /api/customers/id/transactions/id   | amount, expiry, status | true |
+| DELETE    | /api/customers/id/transactions/id   | none | true |
+| GET       | /api/stats/total  | none | true |
+| GET       | /api/stats/month    | none | true |
+| GET       | /api/stats/customers    | none | true |
 ###Using the API
 ####Users:
 #####Creating a User
@@ -85,8 +109,12 @@ You will be able to do any of the following
 
 
 ####Other Features
-* Pagination: Users can specify page number and number of records per page. The first page is returned by default and the number of records per page is 20. You can do this by appending either or both of `&page=2` and `&limit=30` to return the second page or return 30 records per page
+* Pagination: Users can specify page number and number of records per page. The first page is returned by default and the number of records per page is 20. You can do this by appending either or both of `&page=2` and `&limit=30` to return the second page or return 30 records per page. E.g:
+ > `curl -X GET "https://my-contactlist.herokuapp.com/api/customers/?page=2&limit=15`
+
 * Search: Users will be able to search customers by name or phone number. `q=Femi` will return customers whose name or number is `like` 'Femi'
+ > `curl -X GET "https://my-contactlist.herokuapp.com/api/customers/?q=Femi`
+
 * Stats: The API also offers features
 
 	* Total Stats `/stats/total`: Here we can view total number of customers, number of transactions and total profit.
