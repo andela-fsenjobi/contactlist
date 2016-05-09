@@ -9,7 +9,6 @@ module Api
         user = user_email.present? && User.find_by(email: user_email)
 
         if user.valid_password? user_password
-          sign_in user, store: false
           user.login
           payload = { email: user.email, id: user.id }
           token = JsonWebToken.encode payload
