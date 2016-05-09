@@ -2,7 +2,6 @@ require "api_constraints"
 
 Contactlist::Application.routes.draw do
   root to: 'welcome#index'
-  devise_for :users
   namespace :api, defaults: { format: :json } do
     scope "(:module)",
           module: :v1,
