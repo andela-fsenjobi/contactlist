@@ -183,6 +183,7 @@
         1,
         1,
         1,
+        1,
         null,
         1,
         40,
@@ -562,7 +563,7 @@
       "/Users/andela/Desktop/contactlist/spec/factories/customers.rb": [
         1,
         1,
-        79,
+        78,
         null,
         null,
         1,
@@ -591,7 +592,7 @@
       "/Users/andela/Desktop/contactlist/spec/factories/users.rb": [
         1,
         1,
-        89,
+        85,
         null,
         null,
         1,
@@ -778,9 +779,9 @@
         1,
         null,
         1,
-        0,
+        1,
         null,
-        0,
+        1,
         null,
         null
       ],
@@ -1543,11 +1544,10 @@
         2,
         2,
         null,
-        1,
         2,
-        null,
         2,
-        null,
+        2,
+        2,
         null
       ],
       "/Users/andela/Desktop/contactlist/app/models/customer.rb": [
@@ -1618,15 +1618,11 @@
         2,
         2,
         null,
-        1,
         2,
         2,
-        null,
-        null,
-        1,
         2,
         2,
-        null,
+        2,
         null,
         1,
         1,
@@ -1670,11 +1666,23 @@
         2,
         2,
         2,
+        2,
+        2,
+        null
+      ],
+      "/Users/andela/Desktop/contactlist/spec/requests/application_conttroler_spec.rb": [
+        1,
         null,
         1,
-        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         null,
-        2,
+        null,
+        null,
         null,
         null
       ],
@@ -1694,6 +1702,6 @@
         null
       ]
     },
-    "timestamp": 1462779927
+    "timestamp": 1462788729
   }
 }

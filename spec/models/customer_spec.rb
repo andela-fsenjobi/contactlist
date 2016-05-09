@@ -10,9 +10,8 @@ describe Customer do
   it { expect(customer).to respond_to(:transactions) }
   it { expect(customer).to be_valid }
 
-  describe "when phone is not present" do
-    let(:customer) { build(:customer, phone: "") }
-
-    it { expect(customer).not_to be_valid }
-  end
+  it { is_expected.to validate_presence_of :user }
+  it { is_expected.to validate_presence_of :name }
+  it { is_expected.to validate_presence_of :phone }
+  it { is_expected.to_not validate_presence_of :referer }
 end
