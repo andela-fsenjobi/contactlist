@@ -10,15 +10,11 @@ describe Transaction do
   it { expect(transaction).to respond_to(:expiry) }
   it { expect(transaction).to be_valid }
 
-  context "when customer is not present" do
-    let(:transaction) { build(:transaction, customer: nil) }
-    it { expect(transaction).not_to be_valid }
-  end
-
-  context "when expiry is not present" do
-    let(:transaction) { build(:transaction, expiry: nil) }
-    it { expect(transaction).not_to be_valid }
-  end
+  it { is_expected.to validate_presence_of :customer }
+  it { is_expected.to validate_presence_of :expiry }
+  it { is_expected.to validate_presence_of :user }
+  it { is_expected.to_not validate_presence_of :status }
+  it { is_expected.to_not validate_presence_of :amount }
 
   context "when amount is not specified" do
     it "should set default status to Unpaid" do
