@@ -25,6 +25,6 @@ class User < ActiveRecord::Base
   end
 
   def valid_password?(login_password)
-    self.password == login_password
+    password == login_password
   end
 end
