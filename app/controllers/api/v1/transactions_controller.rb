@@ -1,27 +1,19 @@
 module Api
   module V1
     class TransactionsController < ApplicationController
-      include SaveHelper
       before_action :authenticate_with_token
       before_action :set_transaction, only: [:show, :update, :destroy]
       before_action :set_transactions, only: [:index]
+      include DefaultActions
 
       def show
         render json: @transaction
-      end
-
-      def index
-        default @transactions, params
       end
 
       def create
         transaction = current_user.transactions.build(transaction_params)
         transaction.customer_id = params[:customer_id]
         save transaction
-      end
-
-      def update
-        edit @transaction, transaction_params
       end
 
       def destroy
