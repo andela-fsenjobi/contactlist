@@ -1,7 +1,7 @@
 module Api
   module V1
     class CustomersController < ApplicationController
-      include SaveHelper
+      include DefaultActions
       before_action :authenticate_with_token
       before_action :set_customer, only: [:show, :update, :destroy]
       before_action :get_customers, only: [:index]
@@ -10,17 +10,9 @@ module Api
         render json: @customer
       end
 
-      def index
-        default @customers, params
-      end
-
       def create
         customer = current_user.customers.build(customer_params)
         save customer
-      end
-
-      def update
-        edit @customer, customer_params
       end
 
       def destroy
