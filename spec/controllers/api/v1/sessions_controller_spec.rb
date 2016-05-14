@@ -3,26 +3,22 @@ require "rails_helper"
 describe Api::V1::SessionsController do
   let(:user) { create(:user) }
   describe 'POST #create' do
-    context "when credentials are correct" do
-      before(:each) do
+    context "when email and username are correct" do
+      it "returns user email, token and success message" do
         credentials = { email: user.email, password: "1qw23er45t" }
         post :create, credentials
-      end
-
-      it "returns the corresponding records" do
         user.reload
         expect(json_response[:email]).to eql user.email
+        expect(json_response[:token]).to be_present
+        expect(json_response[:message]).to eq "You are now logged in"
         is_expected.to respond_with 200
       end
     end
 
-    context "when credentials are incorrect" do
-      before(:each) do
+    context "when password is wrong" do
+      it "returns an error message" do
         credentials = { email: user.email, password: "qwewqwewqwewq" }
         post :create, credentials
-      end
-
-      it "returns the corresponding records" do
         expect(json_response[:error]).to eql "Invalid login credentials"
         is_expected.to respond_with 422
       end
@@ -30,38 +26,31 @@ describe Api::V1::SessionsController do
   end
 
   describe 'GET #destroy' do
-    context "user logged in" do
-      before(:each) do
+    context "when authentication token is provided" do
+      it "returns a success message" do
         api_authorization_header(user)
         get :destroy
-      end
-
-      it "informs user he has been logged out" do
         expect(json_response[:message]).to eql "You are logged out"
         is_expected.to respond_with 401
       end
     end
 
-    context "user not logged in" do
-      before(:each) do
+    context "when user authentication token not provided" do
+      it "returns an error message" do
         create(:user)
         get :destroy
-      end
-
-      it "inform user he is not authenticated" do
         expect(json_response[:errors]).to eql "Not authenticated"
         is_expected.to respond_with 401
       end
     end
 
-    context "user logged out" do
-      before(:each) do
+    context "when user is logged out" do
+      it "returns an error message" do
         api_authorization_header(user)
         user.logout
         get :destroy
+        expect(json_response[:errors]).to eql "Not authenticated"
       end
-
-      it { expect(json_response[:errors]).to eql "Not authenticated" }
     end
   end
 end

@@ -17,7 +17,7 @@ module Api
 
       def destroy
         @customer.destroy
-        render json: { message: "Record deleted" }, status: 204
+        render json: { message: "Record deleted" }, status: 200
       end
 
       private

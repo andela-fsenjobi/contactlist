@@ -3,7 +3,7 @@ require "json_web_token"
 module Request
   module JsonHelpers
     def json_response
-      @json_resonse ||= JSON.parse(response.body, symbolize_names: true)
+      @json_response ||= JSON.parse(response.body, symbolize_names: true)
     end
   end
 
