@@ -4,7 +4,7 @@ describe Api::V1::StatsController do
   let(:user) { create(:user) }
 
   describe 'GET #total' do
-    before(:each) do
+    it "returns all time statistics" do
       create(:customer, user: user)
       customer = create(:customer, user: user)
       3.times do
@@ -23,9 +23,6 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :total
-    end
-
-    it "returns all time statistics" do
       stat_response = json_response
       expect(stat_response[:total_customers]).to eql 2
       expect(stat_response[:total_transactions]).to eql 6
@@ -35,7 +32,7 @@ describe Api::V1::StatsController do
   end
 
   describe 'GET #month' do
-    before(:each) do
+    it "returns currrent month's statistics" do
       create(:customer, user: user)
       customer = create(:customer, user: user)
       3.times do
@@ -54,9 +51,6 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :month
-    end
-
-    it "returns currrent month's statistics" do
       stat_response = json_response
       expect(stat_response[:month_customers]).to eql 2
       expect(stat_response[:month_transactions]).to eql 3
@@ -66,7 +60,7 @@ describe Api::V1::StatsController do
   end
 
   describe 'POST #customers' do
-    before(:each) do
+    it "returns customers sorted by number of transactions" do
       create(:customer, user: user)
       customer = create(:customer, user: user)
       3.times do
@@ -84,9 +78,6 @@ describe Api::V1::StatsController do
 
       api_authorization_header(user)
       get :customers
-    end
-
-    it "returns customers sorted by number of transactions" do
       stat_response = json_response[:stats]
       expect(stat_response.length).to eql 2
       expect(stat_response.first[:transactions_count]).to eql 6
