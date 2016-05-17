@@ -3,6 +3,7 @@ require "rails_helper"
 describe Api::V1::TransactionsController do
   let(:user) { create(:user) }
   let(:customer) { create(:customer) }
+  let(:message) { Messages.new }
 
   describe 'GET #show' do
     context "when authentication token is provided" do
@@ -17,23 +18,23 @@ describe Api::V1::TransactionsController do
     end
 
     context "when authentication token is provided and user is logged out" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         transaction = create(:transaction, user: user, customer: customer)
         api_authorization_header(user)
         user.logout
         get :show, customer_id: customer.id, id: transaction.id
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         transaction = create(:transaction, user: user, customer: customer)
         get :show, customer_id: customer.id, id: transaction.id
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -90,11 +91,11 @@ describe Api::V1::TransactionsController do
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         create(:transaction, user: user, customer: customer)
         get :index
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -118,20 +119,21 @@ describe Api::V1::TransactionsController do
     end
 
     context "when expiry is nil" do
-      it "returns an error message" do
+      it "returns create error message" do
         api_authorization_header(user)
         post :create, customer_id: customer.id, expiry: nil
         transaction_response = json_response
-        expect(transaction_response[:error]).to eql "Transaction not created"
+        expect(transaction_response[:error]).
+          to eql message.create_error("transaction")
         is_expected.to respond_with 422
       end
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         post :create, customer_id: customer.id, expiry: nil
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -153,7 +155,7 @@ describe Api::V1::TransactionsController do
     end
 
     context "when expiry is nil" do
-      it "returns an error message" do
+      it "returns update error message" do
         transaction = create(:transaction, user: user)
         api_authorization_header(user)
         patch :update,
@@ -161,20 +163,21 @@ describe Api::V1::TransactionsController do
               id: transaction.id,
               expiry: nil
         transaction_response = json_response
-        expect(transaction_response[:error]).to eql "Transaction not updated"
+        expect(transaction_response[:error]).
+          to eql message.update_error("transaction")
         is_expected.to respond_with 422
       end
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         transaction = create(:transaction, user: user)
         patch :update,
               customer_id: customer.id,
               id: transaction.id,
               expiry: nil
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -187,17 +190,17 @@ describe Api::V1::TransactionsController do
         api_authorization_header(user)
         delete :destroy, id: transaction.id
         transaction_response = json_response
-        expect(transaction_response[:message]).to eql "Record deleted"
-        is_expected.to respond_with 204
+        expect(transaction_response[:message]).to eql message.delete_message
+        is_expected.to respond_with 200
       end
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         transaction = create(:transaction, user: user, customer: customer)
         delete :destroy, id: transaction.id
         transaction_response = json_response
-        expect(transaction_response[:errors]).to eql "Not authenticated"
+        expect(transaction_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end

@@ -7,4 +7,8 @@ class ApplicationController < ActionController::API
               debug: "Please check the documentation for existing end points" }
     render json: found, status: 404
   end
+
+  def message
+    Messages.new
+  end
 end

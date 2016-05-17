@@ -35,7 +35,7 @@ module Api
 
       def destroy
         current_user.destroy
-        render json: { message: "User has been deleted" }, status: 204
+        render json: { message: "User has been deleted" }, status: 200
       end
 
       private

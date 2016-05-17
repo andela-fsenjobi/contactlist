@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Api::V1::CustomersController do
   let(:user) { create(:user) }
+  let(:message) { Messages.new }
   describe 'GET #show' do
     context "when authentication token is provided" do
       it "should return customer details" do
@@ -15,11 +16,11 @@ describe Api::V1::CustomersController do
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         customer = create(:customer, user: user)
         get :show, id: customer.id
         customer_response = json_response
-        expect(customer_response[:errors]).to eql "Not authenticated"
+        expect(customer_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -65,10 +66,10 @@ describe Api::V1::CustomersController do
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         get :index
         customer_response = json_response
-        expect(customer_response[:errors]).to eql "Not authenticated"
+        expect(customer_response[:errors]).to eql message.auth_error
       end
     end
   end
@@ -86,21 +87,22 @@ describe Api::V1::CustomersController do
     end
 
     context "when phone attribute is nil" do
-      it "returns an error message" do
+      it "returns create error message" do
         customer_attributes = attributes_for(:customer, phone: nil, user: user)
         api_authorization_header(user)
         post :create, customer: customer_attributes
         customer_response = json_response
-        expect(customer_response[:error]).to eql "Customer not created"
+        expect(customer_response[:error]).
+          to eql message.create_error("customer")
         is_expected.to respond_with 422
       end
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         post :create, name: "Name", phone: "08012939248"
         customer_response = json_response
-        expect(customer_response[:errors]).to eql "Not authenticated"
+        expect(customer_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -119,33 +121,35 @@ describe Api::V1::CustomersController do
     end
 
     context "when customer name is blank" do
-      it "returns an error message" do
+      it "returns update error message" do
         customer = create(:customer, user: user)
         api_authorization_header(user)
         patch :update, id: customer.id, name: ""
         customer_response = json_response
-        expect(customer_response[:error]).to eql "Customer not updated"
+        expect(customer_response[:error]).
+          to eql message.update_error("customer")
         is_expected.to respond_with 422
       end
     end
 
     context "when customer phone is blank" do
-      it "returns an error message" do
+      it "returns update error message" do
         customer = create(:customer, user: user)
         api_authorization_header(user)
         patch :update, id: customer.id, phone: ""
         customer_response = json_response
-        expect(customer_response[:error]).to eql "Customer not updated"
+        expect(customer_response[:error]).
+          to eql message.update_error("customer")
         is_expected.to respond_with 422
       end
     end
 
-    context "when customer phone is blank" do
-      it "returns an error message" do
+    context "when authentication token is not provided" do
+      it "returns authentication error message" do
         customer = create(:customer, user: user)
         patch :update, id: customer.id, phone: ""
         customer_response = json_response
-        expect(customer_response[:errors]).to eql "Not authenticated"
+        expect(customer_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -158,7 +162,7 @@ describe Api::V1::CustomersController do
         api_authorization_header(user)
         delete :destroy, id: customer.id
         customer_response = json_response
-        expect(customer_response[:message]).to eql "Record deleted"
+        expect(customer_response[:message]).to eql message.delete_message
         is_expected.to respond_with 200
       end
     end

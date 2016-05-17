@@ -18,7 +18,7 @@ module Api
 
       def destroy
         if @transaction.destroy
-          render json: { message: "Record deleted" }, status: 204
+          render json: { message: message.delete_message }, status: 200
         end
       end
 

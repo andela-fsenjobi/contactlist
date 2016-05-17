@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Api::V1::SessionsController do
   let(:user) { create(:user) }
+  let(:message) { Messages.new }
   describe 'POST #create' do
     context "when email and username are correct" do
       it "returns user email, token and success message" do
@@ -10,7 +11,7 @@ describe Api::V1::SessionsController do
         user.reload
         expect(json_response[:email]).to eql user.email
         expect(json_response[:token]).to be_present
-        expect(json_response[:message]).to eq "You are now logged in"
+        expect(json_response[:message]).to eq message.logged_in
         is_expected.to respond_with 200
       end
     end
@@ -19,7 +20,7 @@ describe Api::V1::SessionsController do
       it "returns an error message" do
         credentials = { email: user.email, password: "qwewqwewqwewq" }
         post :create, credentials
-        expect(json_response[:error]).to eql "Invalid login credentials"
+        expect(json_response[:error]).to eql message.invalid_credentials
         is_expected.to respond_with 422
       end
     end
@@ -30,7 +31,7 @@ describe Api::V1::SessionsController do
       it "returns a success message" do
         api_authorization_header(user)
         get :destroy
-        expect(json_response[:message]).to eql "You are logged out"
+        expect(json_response[:message]).to eql message.logged_out
         is_expected.to respond_with 401
       end
     end
@@ -39,7 +40,7 @@ describe Api::V1::SessionsController do
       it "returns an error message" do
         create(:user)
         get :destroy
-        expect(json_response[:errors]).to eql "Not authenticated"
+        expect(json_response[:errors]).to eql message.auth_error
         is_expected.to respond_with 401
       end
     end
@@ -49,7 +50,7 @@ describe Api::V1::SessionsController do
         api_authorization_header(user)
         user.logout
         get :destroy
-        expect(json_response[:errors]).to eql "Not authenticated"
+        expect(json_response[:errors]).to eql message.auth_error
       end
     end
   end
