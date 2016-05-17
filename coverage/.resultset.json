@@ -413,6 +413,14 @@
         1,
         4,
         null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        1,
+        2,
+        null,
         null
       ],
       "/Users/andela/Desktop/contactlist/spec/support/request_helpers.rb": [
@@ -528,7 +536,7 @@
         null,
         null,
         1,
-        10,
+        12,
         null,
         null
       ],
@@ -1469,13 +1477,14 @@
         1,
         null,
         1,
+        2,
         1,
         1,
         1,
         1,
         1,
         1,
-        null,
+        1,
         null,
         null,
         null,
@@ -1497,6 +1506,6 @@
         null
       ]
     },
-    "timestamp": 1463472965
+    "timestamp": 1463474883
   }
 }

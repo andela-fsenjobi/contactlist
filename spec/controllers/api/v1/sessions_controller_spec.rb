@@ -17,7 +17,7 @@ describe Api::V1::SessionsController do
     end
 
     context "when password is wrong" do
-      it "returns an error message" do
+      it "returns invalid credentials error message" do
         credentials = { email: user.email, password: "qwewqwewqwewq" }
         post :create, credentials
         expect(json_response[:error]).to eql message.invalid_credentials
@@ -28,7 +28,7 @@ describe Api::V1::SessionsController do
 
   describe 'GET #destroy' do
     context "when authentication token is provided" do
-      it "returns a success message" do
+      it "returns user logged out message" do
         api_authorization_header(user)
         get :destroy
         expect(json_response[:message]).to eql message.logged_out
@@ -37,7 +37,7 @@ describe Api::V1::SessionsController do
     end
 
     context "when user authentication token not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         create(:user)
         get :destroy
         expect(json_response[:errors]).to eql message.auth_error
@@ -46,7 +46,7 @@ describe Api::V1::SessionsController do
     end
 
     context "when user is logged out" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         api_authorization_header(user)
         user.logout
         get :destroy
