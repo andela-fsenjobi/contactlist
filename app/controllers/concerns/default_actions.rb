@@ -3,7 +3,7 @@ module DefaultActions
     if object.save
       render json: object, status: 201, location: [:api, object]
     else
-      render json: { error: message.create_error("#{object.class.name}") },
+      render json: { error: message.create_error(object.class.name.to_s) },
              status: 422
     end
   end
@@ -12,7 +12,7 @@ module DefaultActions
     if resource.update(get_params)
       render json: resource, status: 201, location: [:api, resource]
     else
-      render json: { error: message.update_error("#{resource.class.name}") },
+      render json: { error: message.update_error(resource.class.name.to_s) },
              status: 422
     end
   end
