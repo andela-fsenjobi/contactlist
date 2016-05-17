@@ -3,25 +3,26 @@ require "rails_helper"
 describe Api::V1::StatsController do
   let(:user) { create(:user) }
   let(:message) { Messages.new }
+  before(:each) do
+    create(:customer, user: user)
+    customer = create(:customer, user: user)
+    3.times do
+      create(
+        :transaction,
+        user: user,
+        customer: customer,
+        created_at: Time.now - 30 * 24 * 60 * 60,
+        expiry: Time.now - 30 * 24 * 60 * 60
+      )
+    end
+
+    3.times do
+      create(:transaction, user: user, customer: customer, expiry: Time.now)
+    end
+  end
 
   describe 'GET #total' do
     it "returns all time statistics" do
-      create(:customer, user: user)
-      customer = create(:customer, user: user)
-      3.times do
-        create(
-          :transaction,
-          user: user,
-          customer: customer,
-          created_at: Time.now - 30 * 24 * 60 * 60,
-          expiry: Time.now - 30 * 24 * 60 * 60
-        )
-      end
-
-      3.times do
-        create(:transaction, user: user, customer: customer, expiry: Time.now)
-      end
-
       api_authorization_header(user)
       get :total
       stat_response = json_response
@@ -33,7 +34,7 @@ describe Api::V1::StatsController do
 
     context "when authentication token is not provided" do
       it "returns authentication error message" do
-        get :customers
+        get :total
         expect(json_response[:errors]).to eq message.auth_error
       end
     end
@@ -41,22 +42,6 @@ describe Api::V1::StatsController do
 
   describe 'GET #month' do
     it "returns currrent month's statistics" do
-      create(:customer, user: user)
-      customer = create(:customer, user: user)
-      3.times do
-        create(
-          :transaction,
-          user: user,
-          customer: customer,
-          created_at: Time.now - 30 * 24 * 60 * 60,
-          expiry: Time.now - 30 * 24 * 60 * 60
-        )
-      end
-
-      3.times do
-        create(:transaction, user: user, customer: customer, expiry: Time.now)
-      end
-
       api_authorization_header(user)
       get :month
       stat_response = json_response
@@ -76,21 +61,6 @@ describe Api::V1::StatsController do
 
   describe 'POST #customers' do
     it "returns customers sorted by number of transactions" do
-      create(:customer, user: user)
-      customer = create(:customer, user: user)
-      3.times do
-        create(
-          :transaction,
-          user: user,
-          customer: customer,
-          created_at: Time.now - 30 * 24 * 60 * 60,
-          expiry: Time.now - 30 * 24 * 60 * 60
-        )
-      end
-      3.times do
-        create(:transaction, user: user, customer: customer, expiry: Time.now)
-      end
-
       api_authorization_header(user)
       get :customers
       stat_response = json_response[:stats]
