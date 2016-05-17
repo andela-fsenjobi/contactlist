@@ -32,7 +32,7 @@ describe Api::V1::StatsController do
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         get :customers
         expect(json_response[:errors]).to eq message.auth_error
       end
@@ -67,7 +67,7 @@ describe Api::V1::StatsController do
     end
 
     context "when authentication token is not provided" do
-      it "returns an error message" do
+      it "returns authentication error message" do
         get :month
         expect(json_response[:errors]).to eq message.auth_error
       end
@@ -102,7 +102,7 @@ describe Api::V1::StatsController do
   end
 
   context "when authentication token is not provided" do
-    it "returns an error message" do
+    it "returns authentication error message" do
       get :customers
       expect(json_response[:errors]).to eq message.auth_error
     end

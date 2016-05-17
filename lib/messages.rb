@@ -26,4 +26,12 @@ class Messages
   def delete_message
     "Record deleted"
   end
+
+  def invalid_endpoint
+    "The end point you requested does not exist"
+  end
+
+  def debug
+    "Please check the documentation for existing end points"
+  end
 end
