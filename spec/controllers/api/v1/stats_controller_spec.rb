@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Api::V1::StatsController do
   let(:user) { create(:user) }
+  let(:message) { Messages.new }
 
   describe 'GET #total' do
     it "returns all time statistics" do
@@ -28,6 +29,13 @@ describe Api::V1::StatsController do
       expect(stat_response[:total_transactions]).to eql 6
       expect(stat_response[:total_gains]).to eql 1200
       is_expected.to respond_with 200
+    end
+
+    context "when authentication token is not provided" do
+      it "returns authentication error message" do
+        get :customers
+        expect(json_response[:errors]).to eq message.auth_error
+      end
     end
   end
 
@@ -57,6 +65,13 @@ describe Api::V1::StatsController do
       expect(stat_response[:month_gains]).to eql 600
       is_expected.to respond_with 200
     end
+
+    context "when authentication token is not provided" do
+      it "returns authentication error message" do
+        get :month
+        expect(json_response[:errors]).to eq message.auth_error
+      end
+    end
   end
 
   describe 'POST #customers' do
@@ -83,6 +98,13 @@ describe Api::V1::StatsController do
       expect(stat_response.first[:transactions_count]).to eql 6
       expect(stat_response.last[:transactions_count]).to eql 0
       is_expected.to respond_with 200
+    end
+  end
+
+  context "when authentication token is not provided" do
+    it "returns authentication error message" do
+      get :customers
+      expect(json_response[:errors]).to eq message.auth_error
     end
   end
 end

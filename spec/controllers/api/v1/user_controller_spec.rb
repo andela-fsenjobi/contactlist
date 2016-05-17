@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Api::V1::UsersController do
   let(:user) { create(:user) }
+
   describe 'GET #show' do
     it "returns the curret user's data" do
       api_authorization_header(user)
