@@ -21,9 +21,5 @@ Contactlist::Application.routes.draw do
       resources :transactions, only: [:index, :destroy]
     end
   end
-  get "*unmatched_route", to: "application#no_route_found"
-  put "*unmatched_route", to: "application#no_route_found"
-  patch "*unmatched_route", to: "application#no_route_found"
-  post "*unmatched_route", to: "application#no_route_found"
-  delete "*unmatched_route", to: "application#no_route_found"
+  match "*unmatched_route", to: "application#no_route_found", via: :all
 end
