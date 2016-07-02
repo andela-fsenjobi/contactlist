@@ -1,3 +1,5 @@
+require "messages"
+
 class ApplicationController < ActionController::API
   include ::ActionController::Serialization
   include Authenticable
@@ -9,6 +11,10 @@ class ApplicationController < ActionController::API
   end
 
   def message
-    Messages.new
+    @message ||= Messages.new
+  end
+
+  def preflight
+    head 200
   end
 end

@@ -7,5 +7,13 @@ Bundler.require(*Rails.groups)
 module Contactlist
   class Application < Rails::Application
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', headers: :any,
+                      methods: [:get, :post, :put, :delete, :options]
+      end
+    end
   end
 end

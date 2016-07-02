@@ -21,5 +21,6 @@ Contactlist::Application.routes.draw do
       resources :transactions, only: [:index, :destroy]
     end
   end
+  match "*path", to: "application#preflight", via: :options
   match "*unmatched_route", to: "application#no_route_found", via: :all
 end
